@@ -29,19 +29,19 @@ function fetchCountriesList(event) {
                 Notiflix.Notify.info("Too many matches found. Please enter a more specific name!")
             }
             else if (countries.length >= 2 && countries.length <= 10) {
-                const markupList = `
-                        ${countries.map(fetchListCountries).join("")}
-                `
+                const markupList = `${countries.map(fetchListCountries).join("")}`
+                resetMarkup(refs.container)
+                resetMarkup(refs.countryContainer)
                 refs.container.insertAdjacentHTML('beforeend', markupList);
                 resetMarkup(refs.countryContainer)
                 Notiflix.Notify.success("There is more then one country with you request!")
             }
             else {
-                 const markupCard = `
-                        ${countries.map(fetchCardCountry).join("")}
-                `
-                refs.countryContainer.insertAdjacentHTML('beforeend', markupCard);
+                const markupCard = `${countries.map(fetchCardCountry).join("")}`
+                
                 resetMarkup(refs.container)
+                resetMarkup(refs.countryContainer)
+                refs.countryContainer.insertAdjacentHTML('beforeend', markupCard);
                 Notiflix.Notify.success("There is one country with that name!")
             }
         }).catch(error => {
