@@ -15,32 +15,27 @@ refs.inputEl.addEventListener('input', debounce(fetchCountriesList, DEBOUNCE_DEL
 
 function fetchCountriesList(event) {
     const inputValue = event.target.value.trim()
-    
-    if (!inputValue )  {
-        resetMarkup(refs.container)
+    resetMarkup(refs.container)
         resetMarkup(refs.countryContainer)
+    if (!inputValue )  {
+
         return;
     }
     fetchCountries(inputValue)
         .then(countries => {
             if (countries.length > 10) {
-                resetMarkup(refs.countryContainer)
-                resetMarkup(refs.container)
+
                 Notiflix.Notify.info("Too many matches found. Please enter a more specific name!")
             }
             else if (countries.length >= 2 && countries.length <= 10) {
                 const markupList = `${countries.map(fetchListCountries).join("")}`
-                resetMarkup(refs.container)
-                resetMarkup(refs.countryContainer)
+
                 refs.container.insertAdjacentHTML('beforeend', markupList);
-                resetMarkup(refs.countryContainer)
                 Notiflix.Notify.success("There is more then one country with you request!")
             }
             else {
                 const markupCard = `${countries.map(fetchCardCountry).join("")}`
                 
-                resetMarkup(refs.container)
-                resetMarkup(refs.countryContainer)
                 refs.countryContainer.insertAdjacentHTML('beforeend', markupCard);
                 Notiflix.Notify.success("There is one country with that name!")
             }
